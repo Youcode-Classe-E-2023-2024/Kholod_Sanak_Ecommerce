@@ -13,10 +13,29 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->paginate(8);
+        // Get all products
+        $allProducts = Product::all();
 
-        return view('home', compact('products'));
+        // Order by desc and paginate
+        $products = Product::orderBy('created_at', 'asc')->paginate(8);
+
+        // Count all products
+        $productCount = $allProducts->count();
+
+        // Filter by date or alphabetically
+        $sort = request('sort');
+
+        if ($sort === 'alphabetically') {
+            // Sort alphabetically
+            $products = Product::orderBy('name')->paginate(8);
+        } elseif ($sort === 'date') {
+            // Sort by date
+            $products = Product::orderBy('created_at', 'desc')->paginate(8);
+        }
+
+        return view('home', compact('products', 'productCount'));
     }
+
 
 
 
