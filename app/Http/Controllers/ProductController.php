@@ -3,16 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
+
 class ProductController extends Controller
 {
-
-
-//    public function showProducts()
-//    {
-//        $products = Product::all(); // You might want to paginate if you have many products
-//
-//        return view('products.index', compact('products'));
-//    }
     /**
      * Display a listing of the resource.
      *
@@ -31,9 +24,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        // Validate the form data
+        $product = new Product;
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->image = $request->image;
+        $product->content = $request->content;
+
+        // Create a new product
+        $product->save();
+
+        // Redirect back or to a different page after creating the product
+        return redirect('/home');
     }
 
     /**
@@ -44,7 +50,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        // Find the product by ID
+        $product = Product::find($id);
 
+        // Check if the product exists
+        if (!$product) {
+            // Handle the case where the product is not found, e.g., redirect back with an error message
+            return redirect()->back()->with('error', 'Product not found');
+        }
+        // If the product exists, pass it to the view
+        return view('product', ['product' => $product]);
     }
 
     /**
@@ -56,7 +71,27 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate the form data if needed
+        // Find the existing product by ID
+        $product = Product::find($id);
+
+        // Check if the product exists
+        if (!$product) {
+            // Handle the case where the product is not found, e.g., redirect back with an error message
+            return redirect()->back()->with('error', 'Product not found');
+        }
+
+        // Update the product with new values
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->image = $request->image;
+        $product->content = $request->content;
+
+        // Save the updated product
+        $product->save();
+
+        // Redirect back or to a different page after updating the product
+        return redirect('/home');
     }
 
     /**
@@ -67,6 +102,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Find the existing product by ID
+        $product = Product::find($id);
+
+        // Check if the product exists
+        if (!$product) {
+            // Handle the case where the product is not found, e.g., redirect back with an error message
+            return redirect()->back()->with('error', 'Product not found');
+        }
+
+        // Delete the product
+        $product->delete();
+
+        // Redirect back or to a different page after deleting the product
+        return redirect('/home')->with('success', 'Product deleted successfully');
     }
+
+
 }

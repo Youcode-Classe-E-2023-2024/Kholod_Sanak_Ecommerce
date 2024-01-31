@@ -19,16 +19,31 @@ use App\Http\Controllers\ProductController;
 //    return view('home');
 //})->name('home');
 
-
+//display products
 Route::get('/home', [ProductController::class, 'index'])->name('home');
 
-//Route::get('/home', [ProductController::class, 'showProducts'])->name('home');
+//add product
+Route::post('/productForm', [ProductController::class, 'store'])->name('storeProduct');
+
+//update product
+Route::post('/productForm/{id}', [ProductController::class, 'update'])->name('updateProduct');
+
+//delete product
+Route::delete('/product/{id}', [ProductController::class,'destroy'])->name('destroyProduct');
 
 
-Route::get('/product', function () {
-    return view('product');
-})->name('product');
+//product content
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('showProduct');
 
+
+//product form
 Route::get('/productForm', function () {
-    return view('productForm');
+    $id = request("id");
+    $id = ["id" => $id];
+    if (request("id") === null) {
+        return view('productForm');
+    } else {
+        // Handle the case where 'id' is not present, perhaps redirect or show an error.
+        return view('productForm', compact("id"));
+    }
 })->name('productForm');

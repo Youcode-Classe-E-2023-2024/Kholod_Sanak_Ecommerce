@@ -68,27 +68,33 @@
         <div class="container mx-auto px-6">
             <div class="md:flex md:items-center">
                 <div class="w-full h-64 md:w-1/2 lg:h-96">
-                    <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="https://images.unsplash.com/photo-1578262825743-a4e402caab76?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80" alt="Nike Air">
+                    <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto"
+                         src="{{ $product->image }}"
+                         alt="{{ $product->name }}">
                 </div>
 
                 <div class="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2">
 {{--                    edit  --}}
                     <div class="flex justify-end m-10  space-x-2 ">
-                        <button onclick="window.location.href='{{ route('productForm') }}'" class="hover:border-black">
+                        <button onclick="window.location.href='{{ route('productForm', ['id' => $product->id]) }}'" class="hover:border-black">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
                         </button>
 {{--                        delete--}}
-                        <button  class="hover:border-black">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
+                        <form method="post" action="{{ route('destroyProduct', ['id' => $product->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="hover:border-black">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </form>
                     </div>
 
-                    <h3 class="text-gray-700 uppercase text-lg">Nike Air</h3>
-                    <span class="text-gray-500 mt-3">$125</span>
+                    <h3 class="text-gray-700 uppercase text-lg">{{ $product->name }}</h3>
+                    <span class="text-gray-500 mt-3">${{ $product->price }}</span>
                     <hr class="my-3">
                     <div class="mt-2">
                         <label class="text-gray-700 text-sm" for="count">Count:</label>
