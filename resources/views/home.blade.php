@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+
 
 </head>
 <body>
@@ -67,10 +69,31 @@
 {{--Products list --}}
     <main class="my-8">
         <div class="container mx-auto px-6">
-            <h3 class="text-gray-700 text-2xl font-medium">Product List</h3>
-            <span class="mt-3 text-sm text-gray-500">200+ Products</span>
-            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
 
+                            <div class="block">
+                                <h3 class="text-gray-700 text-2xl font-medium">Product List</h3>
+                                <span class="mt-3 text-sm text-gray-500">{{ $productCount }} Products</span>
+                            </div>
+            <div class="flex justify-end">
+
+                {{--            Select start --}}
+                <div class=" ">
+                    <form action="{{ route('home') }}" method="get">
+                        @csrf
+                        <label for="select" class="font-semibold block py-2">Filter Products by:</label>
+                        <div class="relative">
+                            <select name="sort" class="text-sm sm:text-base text-gray-800 outline-none border-2 px-4 sm:px-4 py-1 rounded-lg">
+                                <option value="alphabetically" >Alphabetically  </option>
+                                <option value="date" selected>Date</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="mt-4 px-2 py-1 bg-blue-500 text-white rounded cursor-pointer">Sort</button>
+                    </form>
+                </div>
+           </div>
+
+            {{--            select end--}}
+            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 {{--                    product card --}}
             @foreach($products as $product)
                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
