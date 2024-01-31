@@ -26,7 +26,7 @@
                     Brand
                 </div>
                 <div class="flex items-center justify-end w-full">
-                    <button onclick="window.location.href='{{ route('product') }}'" class="p-2 rounded-full border-2 border-white mx-5 -mb-4 hover:border-black focus:outline-none focus:bg-blue-500">
+                    <button onclick="window.location.href='{{ route('productForm') }}'" class="p-2 rounded-full border-2 border-white mx-5 -mb-4 hover:border-black focus:outline-none focus:bg-blue-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
@@ -135,7 +135,7 @@
                     </div>
 
 
-                   
+
                 </div>
             </div>
         </div>

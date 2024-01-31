@@ -32,10 +32,16 @@
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
 
-                                    <!-- stock -->
                                     <div class="md:col-span-3">
                                         <label for="id">Price</label>
                                         <input type="text" id="id" placeholder="Enter Your Price ....."
+                                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                    </div>
+
+                                    <!-- Image URL -->
+                                    <div class="md:col-span-3">
+                                        <label for="image">Image URL</label>
+                                        <input type="text" id="image" placeholder="Enter Image URL ....."
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
                                     <!-- Product Description -->

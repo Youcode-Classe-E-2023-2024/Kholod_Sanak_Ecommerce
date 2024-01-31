@@ -27,7 +27,7 @@
                     Brand
                 </div>
                 <div class="flex items-center justify-end w-full">
-                    <button onclick="window.location.href='{{ route('product') }}'" class="p-2 rounded-full border-2 border-white mx-5 -mb-4 hover:border-black focus:outline-none focus:bg-blue-500">
+                    <button onclick="window.location.href='{{ route('productForm') }}'" class="p-2 rounded-full border-2 border-white mx-5 -mb-4 hover:border-black focus:outline-none focus:bg-blue-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
@@ -70,21 +70,28 @@
             <h3 class="text-gray-700 text-2xl font-medium">Product List</h3>
             <span class="mt-3 text-sm text-gray-500">200+ Products</span>
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+
+                {{--                    product card --}}
+            @foreach($products as $product)
                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80')">
+                        <div class="flex items-end justify-end h-56 w-full">
+                            <img class="w-full h-full object-fit" src="{{ $product->image }}" alt="{{ $product->name }}">
+
+                    </div>
+
+                    <div class="flex justify-between">
+                        <div class="px-5 py-3">
+                            <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
+                            <span class="text-gray-500 mt-2">${{ $product->price }}</span>
+                        </div>
                         <a href="{{ route('product') }}" class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                             <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                         </a>
-
-
-                    </div>
-                    <div class="px-5 py-3">
-                        <h3 class="text-gray-700 uppercase">Classic watch</h3>
-                        <span class="text-gray-500 mt-2">$123</span>
                     </div>
                 </div>
+                @endforeach
 
 
             </div>
