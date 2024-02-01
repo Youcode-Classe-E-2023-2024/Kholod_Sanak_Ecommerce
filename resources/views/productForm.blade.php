@@ -23,23 +23,22 @@
                     <!-- Product name -->
                     <div class="lg:col-span-2">
 
-                        <form method="post" action="{{ isset($id) ? route('updateProduct', $id) : route('storeProduct') }}">
+                        <form method="post" action="{{ isset($id) ? route('updateProduct', $product) : route('storeProduct') }}">
                             @csrf
-
-                            @if(isset($product))
-                                <input type="hidden" name="id" value="{{ $product->id }}">
-                            @endif
 
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                     <div class="md:col-span-3">
                                         <label for="title">Product Name</label>
                                         <input type="text" id="title" name="name" placeholder="Enter your Product Name"
+                                               value="{{ old('name', isset($product) ? $product->name : '') }}"
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
 
                                     <div class="md:col-span-3">
                                         <label for="id">Price</label>
                                         <input type="text" id="price" name="price" placeholder="Enter Your Price ....."
+                                               value="{{ old('name', isset($product) ? $product->price : '') }}"
+
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
 
@@ -47,12 +46,14 @@
                                     <div class="md:col-span-3">
                                         <label for="image">Image URL</label>
                                         <input type="text" name="image" id="image" placeholder="Enter Image URL ....."
+                                               value="{{ old('name', isset($product) ? $product->image : '') }}"
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
                                     <!-- Product Description -->
                                     <div class="md:col-span-3">
                                         <label for="body">Product Description</label>
                                         <input type="text" id="body" name="content" placeholder="Enter Your Product Description....."
+                                               value="{{ old('name', isset($product) ? $product->content : '') }}"
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
                                 </div>
@@ -65,16 +66,12 @@
                                     </button>
                                 </div>
                             </div>
-                            </form>
-
-
-
-
-
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <a href="{{ route('home') }}"  class="md:absolute  bottom-0 left-0 p-10 ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none"
