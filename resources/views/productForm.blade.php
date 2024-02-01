@@ -23,7 +23,7 @@
                     <!-- Product name -->
                     <div class="lg:col-span-2">
 
-                        <form method="post" action="{{ isset($id) ? route('updateProduct', $product) : route('storeProduct') }}">
+                        <form method="post" enctype="multipart/form-data" action="{{ isset($id) ? route('updateProduct', $product) : route('storeProduct') }}">
                             @csrf
 
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
@@ -42,14 +42,14 @@
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                     </div>
 
-                                    <!-- Image URL -->
-                                    <div class="md:col-span-3">
-                                        <label for="image">Image URL</label>
-                                        <input type="text" name="image" id="image" placeholder="Enter Image URL ....."
-                                               value="{{ old('name', isset($product) ? $product->image : '') }}"
-                                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
-                                    </div>
-                                    <!-- Product Description -->
+                                    <!-- Image  -->
+                                <div class="md:col-span-3">
+                                    <label for="image">Image Upload</label>
+                                    <input type="file" name="image" id="image"
+                                           class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                </div>
+
+                                <!-- Product Description -->
                                     <div class="md:col-span-3">
                                         <label for="body">Product Description</label>
                                         <input type="text" id="body" name="content" placeholder="Enter Your Product Description....."
