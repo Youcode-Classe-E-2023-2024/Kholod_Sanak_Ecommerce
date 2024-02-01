@@ -93,7 +93,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate the form data if needed
+        // Validate the form data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'image' => 'required|url',
+            'content' => 'required|string',
+        ]);
+
         // Find the existing product by ID
         $product = Product::find($id);
 
@@ -103,14 +110,8 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Product not found');
         }
 
-        // Update the product with new values
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->image = $request->image;
-        $product->content = $request->content;
-
-        // Save the updated product
-        $product->save();
+        // Update the product with new validated values
+        $product->update($validatedData);
 
         // Redirect back or to a different page after updating the product
         return redirect('/home');
@@ -139,6 +140,26 @@ class ProductController extends Controller
         // Redirect back or to a different page after deleting the product
         return redirect('/home')->with('success', 'Product deleted successfully');
     }
+
+    public function showForm(Request $request)
+    {
+        $id = $request->input('id');
+
+        if ($id === null) {
+            return view('productForm');
+        } else {
+            $product = Product::find($id);
+
+            if ($product) {
+                return view('productForm', compact('product'));
+            } else {
+                // Handle the case where the product with the given ID is not found.
+                return redirect()->route('product')->with('error', 'Product not found.');
+            }
+        }
+    }
+
+
 
 
 }
