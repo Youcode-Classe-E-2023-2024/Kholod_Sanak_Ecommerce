@@ -49,20 +49,26 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request);
         // Validate the form data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'image' => 'required|url',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'content' => 'required|string',
         ]);
 
-        // Create a new product
-        Product::create($validatedData);
+
+        $requestData = $request->all();
+        $fileName = time().$request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('images', $fileName, 'public');
+        $requestData['image'] = '/storage/' . $path;
+        Product::create($requestData);
 
         // Redirect back or to a different page after creating the product
-        return redirect('/home');
+        return redirect('/home')->with('success', 'Product created successfully!');
     }
+
 
     /**
      * Display the specified resource.
@@ -97,7 +103,7 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'image' => 'required|url',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'content' => 'required|string',
         ]);
 
@@ -110,12 +116,24 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Product not found');
         }
 
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            // Delete the existing image file if it exists
+            Storage::disk('public')->delete($product->image);
+
+            // Upload the new image file
+            $fileName = time() . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('images', $fileName, 'public');
+            $validatedData['image'] = '/storage/' . $path;
+        }
+
         // Update the product with new validated values
         $product->update($validatedData);
 
         // Redirect back or to a different page after updating the product
-        return redirect('/home');
+        return redirect('/home')->with('success', 'Product updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
