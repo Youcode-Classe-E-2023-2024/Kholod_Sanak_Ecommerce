@@ -84,7 +84,7 @@
                         <div class="relative">
                             <select name="sort" class="text-sm sm:text-base text-gray-800 outline-none border-2 px-4 sm:px-4 py-1 rounded-lg">
                                 <option value="alphabetically" >Alphabetically  </option>
-                                <option value="date" selected>Date</option>
+                                <option value="date" >Date</option>
                             </select>
                         </div>
                         <button type="submit" class="mt-4 px-2 py-1 bg-blue-500 text-white rounded cursor-pointer">Sort</button>
