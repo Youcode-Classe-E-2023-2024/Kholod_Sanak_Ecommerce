@@ -37,13 +37,5 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('showProdu
 
 
 //product form
-Route::get('/productForm', function () {
-    $id = request("id");
-    $id = ["id" => $id];
-    if (request("id") === null) {
-        return view('productForm');
-    } else {
-        // Handle the case where 'id' is not present, perhaps redirect or show an error.
-        return view('productForm', compact("id"));
-    }
-})->name('productForm');
+Route::get('/productForm', [ProductController::class, 'showForm'])->name('productForm');
+
