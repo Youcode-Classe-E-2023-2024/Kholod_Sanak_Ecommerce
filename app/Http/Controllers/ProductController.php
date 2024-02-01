@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\YourFormRequest;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,7 @@ class ProductController extends Controller
         // Get all products
         $allProducts = Product::all();
 
-        // Order by desc and paginate
+        // Order by asc and paginate
         $products = Product::orderBy('created_at', 'asc')->paginate(8);
 
         // Count all products
@@ -49,15 +50,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // Validate the form data
-        $product = new Product;
-
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->image = $request->image;
-        $product->content = $request->content;
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'image' => 'required|url',
+            'content' => 'required|string',
+        ]);
 
         // Create a new product
-        $product->save();
+        Product::create($validatedData);
 
         // Redirect back or to a different page after creating the product
         return redirect('/home');
