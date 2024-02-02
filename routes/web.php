@@ -14,10 +14,9 @@ use App\Http\Controllers\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//Route::get('/home', function () {
-//    return view('home');
-//})->name('home');
+Route::get('',function (){
+     return view('home');
+});
 
 //display products
 Route::get('/home', [ProductController::class, 'index'])->name('home');
@@ -39,3 +38,13 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('showProdu
 //product form
 Route::get('/productForm', [ProductController::class, 'showForm'])->name('productForm');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

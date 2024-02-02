@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Requests\YourFormRequest;
 
 class ProductController extends Controller
 {
@@ -18,7 +17,7 @@ class ProductController extends Controller
         $allProducts = Product::all();
 
         // Order by asc and paginate
-        $products = Product::orderBy('created_at', 'asc')->paginate(8);
+        $products = Product::paginate(8);
 
         // Count all products
         $productCount = $allProducts->count();
@@ -49,7 +48,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
+      //  dd($request);
         // Validate the form data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -57,7 +56,6 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'content' => 'required|string',
         ]);
-
 
         $requestData = $request->all();
         $fileName = time().$request->file('image')->getClientOriginalName();
@@ -99,14 +97,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate the form data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'content' => 'required|string',
-        ]);
-
         // Find the existing product by ID
         $product = Product::find($id);
 
@@ -116,23 +106,26 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Product not found');
         }
 
-        // Handle file upload
+        // Handle file upload if the file input exists
         if ($request->hasFile('image')) {
-            // Delete the existing image file if it exists
-            Storage::disk('public')->delete($product->image);
 
             // Upload the new image file
-            $fileName = time() . $request->file('image')->getClientOriginalName();
+            $fileName = time().$request->file('image')->getClientOriginalName();
             $path = $request->file('image')->storeAs('images', $fileName, 'public');
-            $validatedData['image'] = '/storage/' . $path;
+            $request->image = '/storage/' . $path;
         }
 
-        // Update the product with new validated values
-        $product->update($validatedData);
+        // Update the product with request data
+        $product->update($request->all());
+
+        $product->image = $request->image;
+        $product->save();
 
         // Redirect back or to a different page after updating the product
-        return redirect('/home')->with('success', 'Product updated successfully!');
+        return redirect('home')->with('success', 'Product updated successfully!');
     }
+
+
 
 
     /**
@@ -162,6 +155,7 @@ class ProductController extends Controller
     public function showForm(Request $request)
     {
         $id = $request->input('id');
+
 
         if ($id === null) {
             return view('productForm');

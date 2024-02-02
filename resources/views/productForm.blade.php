@@ -23,8 +23,9 @@
                     <!-- Product name -->
                     <div class="lg:col-span-2">
 
-                        <form method="post" enctype="multipart/form-data" action="{{ isset($id) ? route('updateProduct', $product) : route('storeProduct') }}">
+                        <form method="post" enctype="multipart/form-data" action="{{ isset($product) ? route('updateProduct', $product) : route('storeProduct') }}">
                             @csrf
+
 
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                     <div class="md:col-span-3">
