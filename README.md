@@ -30,4 +30,6 @@ Ce projet utilise les technologies suivantes :
 
 1. Clonez ce dépôt sur votre machine locale.
 
-   ```ssh git clone https://github.com/votre-utilisateur/projet-e-commerce.git```
+   
+```bash
+git clone https://github.com/your-username/projet-e-commerce.git
